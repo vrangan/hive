@@ -29,6 +29,7 @@ public enum HiveOperationType {
   EXPLAIN,
   LOAD,
   EXPORT,
+  EXPORT_EVENTS,
   IMPORT,
   CREATEDATABASE,
   DROPDATABASE,

@@ -96,6 +96,7 @@ TOK_UNIQUEJOIN;
 TOK_CROSSJOIN;
 TOK_LOAD;
 TOK_EXPORT;
+TOK_EXPORT_EVENTS;
 TOK_IMPORT;
 TOK_REPLICATION;
 TOK_METADATA;
@@ -752,6 +753,15 @@ exportStatement
       KW_TO (path=StringLiteral)
       replicationClause?
     -> ^(TOK_EXPORT $tab $path replicationClause?)
+    ;
+
+exportSequence
+@init { pushMsg("export sequence", state); }
+@after { popMsg(state); }
+    : KW_EXPORT
+      KW_EVENT (from=Number) (KW_MINUS (to=Number))?
+      KW_TO (path=StringLiteral)
+    -> ^(TOK_EXPORT_EVENTS $path $from $to?)
     ;
 
 importStatement

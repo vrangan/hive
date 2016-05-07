@@ -273,6 +273,9 @@ public class Operation2Privilege {
     // select with grant for exporting contents
     op2Priv.put(HiveOperationType.EXPORT, PrivRequirement.newIOPrivRequirement
 (SEL_GRANT_AR, OWNER_INS_SEL_DEL_NOGRANT_AR));
+    op2Priv.put(HiveOperationType.EXPORT_EVENTS, PrivRequirement.newIOPrivRequirement
+(SEL_GRANT_AR, OWNER_INS_SEL_DEL_NOGRANT_AR));
+
     // For import statement, require uri rwx+owner privileges on input uri, and
     // necessary privileges on the output table and database
     // NOTE : privileges are only checked if the object of that type is marked as part of ReadEntity or WriteEntity
