@@ -748,6 +748,13 @@ replicationClause
 exportStatement
 @init { pushMsg("export statement", state); }
 @after { popMsg(state); }
+    : exportBaseStatement
+    | exportEventsStatement
+    ;
+
+exportBaseStatement
+@init { pushMsg("export statement", state); }
+@after { popMsg(state); }
     : KW_EXPORT
       KW_TABLE (tab=tableOrPartition)
       KW_TO (path=StringLiteral)
@@ -755,13 +762,13 @@ exportStatement
     -> ^(TOK_EXPORT $tab $path replicationClause?)
     ;
 
-exportSequence
-@init { pushMsg("export sequence", state); }
+exportEventsStatement
+@init { pushMsg("export events statement", state); }
 @after { popMsg(state); }
     : KW_EXPORT
-      KW_EVENT (from=Number) (KW_MINUS (to=Number))?
+      KW_EVENT (eventId=Number) ( MINUS (rangeEnd=Number))?
       KW_TO (path=StringLiteral)
-    -> ^(TOK_EXPORT_EVENTS $path $from $to?)
+    -> ^(TOK_EXPORT_EVENTS $path $eventId $rangeEnd?)
     ;
 
 importStatement
